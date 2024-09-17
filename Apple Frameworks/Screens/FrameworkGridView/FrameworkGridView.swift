@@ -37,7 +37,7 @@ struct GridView: View {
                     LazyVGrid(columns: viewModel.columns, content: {
                         ForEach(MockData.frameworks) { framework in
                             FrameworkIconTextView(framework: framework, 
-                                                  isUsingListFormat: $viewModel.isUsingListFormat)
+                                                  isUsingListFormat: .constant(false))
                                 .onTapGesture {
                                     viewModel.selectedFramework = framework
                                 }
@@ -64,7 +64,7 @@ struct ListView: View {
                     NavigationLink(destination: DetailView(framework: framework,
                                                            isShowingDetailView: $viewModel.isShowingDetailView,
                                                            isUsingListFormat: $viewModel.isUsingListFormat)) {
-                        FrameworkIconTextView(framework: framework, isUsingListFormat: .constant(false))
+                        FrameworkIconTextView(framework: framework, isUsingListFormat: .constant(true))
                     }
                 }
             }
