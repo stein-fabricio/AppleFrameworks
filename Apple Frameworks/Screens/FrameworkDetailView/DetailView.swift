@@ -36,8 +36,21 @@ struct DetailView: View {
                     isShowingSafariView = true
                     ///SafariView(url: URL(string: framework.urlString)!)
                 } label: {
-                    AFButton(title: "Learn More")
+                    // iOS15
+                    Label("Learn More", systemImage: "book.fill")
+                    // iOS15-
+//                    AFButton(title: "Learn More")
                 }
+                // iOS15:
+                .buttonStyle(.bordered)
+                .controlSize(.large)
+                .tint(.red)
+                /*
+                .buttonStyle(.borderedProminent)
+                .foregroundColor(.green)
+                .buttonBorderShape(.capsule)
+                .buttonBorderShape(.roundedRectangle(radius: 20))
+                 */
                 /// sheet(...
                 .fullScreenCover(isPresented: $isShowingSafariView, content: {
                     SafariView(url: (URL(string: framework.urlString) ?? URL(string: "www.apple.com"))!)
