@@ -31,26 +31,41 @@ struct FrameworkGridView: View {
 struct GridView: View {
     @StateObject var viewModel: FrameworkGridViewModel
     var body: some View {
-        ZStack {
-            NavigationView {
+        // iOS16: Data driven API
+        NavigationStack {
+//        ZStack {
+//            NavigationView {
                 ScrollView {
                     LazyVGrid(columns: viewModel.columns, content: {
                         ForEach(MockData.frameworks) { framework in
-                            FrameworkIconTextView(framework: framework, 
+                            NavigationLink(value: framework) {
+                                FrameworkIconTextView(framework: framework,
+                                                      isUsingListFormat: .constant(false))
+                            }
+                            /* iOS16<
+                            FrameworkIconTextView(framework: framework,
                                                   isUsingListFormat: .constant(false))
                                 .onTapGesture {
                                     viewModel.selectedFramework = framework
                                 }
+                             */
                         }
                     })
                     .navigationTitle("🍎 Frameworks")
+                    //iOS16:
+                    .navigationDestination(for: Framework.self) { framework in
+                        DetailView(framework: framework,
+                                   isUsingListFormat: $viewModel.isUsingListFormat)
+                    }
+                    /* iOS16<
                     .sheet(isPresented: $viewModel.isShowingDetailView, content: {
                         DetailView(framework: viewModel.selectedFramework ?? MockData.sampleFramework,
                                    isShowingDetailView: $viewModel.isShowingDetailView,
                                    isUsingListFormat: $viewModel.isUsingListFormat) /// oops could not find.
                     })
+                     */
                 }
-            }
+//            }
         }
     }
 }
@@ -58,14 +73,23 @@ struct GridView: View {
 struct ListView: View {
     @StateObject var viewModel: FrameworkGridViewModel
     var body: some View {
-        NavigationView {
+        // iOS16:
+        NavigationStack {
+//        NavigationView {
             List {
                 ForEach(MockData.frameworks) { framework in
+                    NavigationLink(value: framework) {
+                        FrameworkIconTextView(framework: framework,
+                                              isUsingListFormat: .constant(false))
+                    }
+                    /* iOS16<
                     NavigationLink(destination: DetailView(framework: framework,
                                                            isShowingDetailView: $viewModel.isShowingDetailView,
                                                            isUsingListFormat: $viewModel.isUsingListFormat)) {
+                     
                         FrameworkIconTextView(framework: framework, isUsingListFormat: .constant(true))
-                    }
+                     
+                    }*/
                 }
             }
             .navigationTitle("🍎 Frameworks")

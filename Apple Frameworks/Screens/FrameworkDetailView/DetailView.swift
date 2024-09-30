@@ -10,7 +10,12 @@ import SwiftUI
 struct DetailView: View {
     
     let framework: Framework
+    //iOS16
+    
+    //iOS16<
+    /*
     @Binding var isShowingDetailView: Bool
+     */
     @Binding var isUsingListFormat: Bool
     @State private var isShowingSafariView = false
     
@@ -18,11 +23,14 @@ struct DetailView: View {
         ZStack {
             BackgroundGradientView()
             VStack {
+                //iOS16<
+                /*
                 if !isUsingListFormat {
                     XDismissButton(isShowingDetailView: $isShowingDetailView)
                 }
                 
                 Spacer()
+                     */
                 
                 FrameworkIconTextView(framework: framework, isUsingListFormat: $isUsingListFormat)
                 
@@ -61,6 +69,6 @@ struct DetailView: View {
 }
 
 #Preview {
-    DetailView(framework: MockData.sampleFramework, isShowingDetailView: .constant(true), isUsingListFormat: .constant(false))
+    DetailView(framework: MockData.sampleFramework, isUsingListFormat: .constant(false))//isShowingDetailView: .constant(true), isUsingListFormat: .constant(false))
         .preferredColorScheme(.dark)
 }
