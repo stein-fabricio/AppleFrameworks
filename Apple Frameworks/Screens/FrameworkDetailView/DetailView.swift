@@ -9,15 +9,7 @@ import SwiftUI
 
 struct DetailView: View {
     
-    let framework: Framework
-    //iOS16
-    
-    //iOS16<
-    /*
-    @Binding var isShowingDetailView: Bool
-     */
-    @Binding var isUsingListFormat: Bool
-    @State private var isShowingSafariView = false
+    @ObservedObject var viewModel: FrameworkDetailViewModel
     
     var body: some View {
         ZStack {
@@ -26,29 +18,35 @@ struct DetailView: View {
                 //iOS16<
                 /*
                 if !isUsingListFormat {
-                    XDismissButton(isShowingDetailView: $isShowingDetailView)
+                    XDismissButton(isShowingDetailView: $viewModel.isShowingDetailView.wrappedValue)
                 }
                 
                 Spacer()
                      */
                 
-                FrameworkIconTextView(framework: framework, isUsingListFormat: $isUsingListFormat)
+                FrameworkIconTextView(framework: viewModel.framework, isUsingListFormat: $viewModel.isUsingListFormat)
                 
-                Text(framework.description)
+                Text(viewModel.framework.description)
                     .font(.body)
                     .padding()
                 
                 Spacer()
                 
-                Button {
-                    isShowingSafariView = true
-                    ///SafariView(url: URL(string: framework.urlString)!)
-                } label: {
-                    // iOS15
+                // outside:
+                Link(destination: URL(string: viewModel.framework.urlString)!) {
                     Label("Learn More", systemImage: "book.fill")
-                    // iOS15-
-//                    AFButton(title: "Learn More")
                 }
+                
+                // inside:
+//                Button {
+//                    viewModel.isShowingSafariView = true
+//                    ///SafariView(url: URL(string: framework.urlString)!)
+//                } label: {
+//                    // iOS15
+//                    Label("Learn More", systemImage: "book.fill")
+//                    // iOS15-
+////                                         AFButton(title: "Learn More")
+//                }
                 // iOS15:
                 .buttonStyle(.bordered)
                 .controlSize(.large)
@@ -60,15 +58,16 @@ struct DetailView: View {
                 .buttonBorderShape(.roundedRectangle(radius: 20))
                  */
                 /// sheet(...
-                .fullScreenCover(isPresented: $isShowingSafariView, content: {
-                    SafariView(url: (URL(string: framework.urlString) ?? URL(string: "www.apple.com"))!)
-                })
+                
+//                .fullScreenCover(isPresented: $viewModel.isShowingSafariView, content: {
+//                    SafariView(url: (URL(string: viewModel.framework.urlString) ?? URL(string: "www.apple.com"))!)
+//                })
             }
         }
     }
 }
 
-#Preview {
-    DetailView(framework: MockData.sampleFramework, isUsingListFormat: .constant(false))//isShowingDetailView: .constant(true), isUsingListFormat: .constant(false))
-        .preferredColorScheme(.dark)
-}
+//#Preview {
+//    DetailView(framework: MockData.sampleFramework, isUsingListFormat: .constant(false))//isShowingDetailView: .constant(true), isUsingListFormat: .constant(false))
+//        .preferredColorScheme(.dark)
+//}

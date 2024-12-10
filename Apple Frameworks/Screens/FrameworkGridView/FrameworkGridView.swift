@@ -54,8 +54,7 @@ struct GridView: View {
                     .navigationTitle("🍎 Frameworks")
                     //iOS16:
                     .navigationDestination(for: Framework.self) { framework in
-                        DetailView(framework: framework,
-                                   isUsingListFormat: $viewModel.isUsingListFormat)
+                        DetailView(viewModel: FrameworkDetailViewModel(framework: framework, isShowingDetailView: $viewModel.isShowingDetailView, isUsingListFormat: viewModel.isUsingListFormat))
                     }
                     /* iOS16<
                     .sheet(isPresented: $viewModel.isShowingDetailView, content: {
