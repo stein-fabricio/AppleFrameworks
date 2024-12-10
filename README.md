@@ -1,2 +1,2 @@
 # AppleFrameworks
-Apple Frameworks nice and easy.
+Apple Frameworks nice and easy in SwiftUI.
